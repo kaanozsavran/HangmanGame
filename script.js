@@ -1,10 +1,13 @@
 const word_el = document.getElementById('word');
 const popup = document.getElementById('popup-container');
 const message_el = document.getElementById('success-message');
+const wrongLetters_el = document.getElementById('wrong-letters')
+const items = document.querySelectorAll('.item');
 
 
-const correctLetters = ['j', 'a', 'v', 's'];
+const correctLetters = [];
 const wrongLetters = [];
+const selectedWord = getRandomWord();
 
 
 function getRandomWord() {
@@ -17,7 +20,6 @@ function getRandomWord() {
 
 
 function displayWord() {
-    const selectedWord = getRandomWord();
 
     word_el.innerHTML = `
         ${selectedWord.split('').map(letter => `
@@ -35,4 +37,62 @@ function displayWord() {
         message_el.innerText = 'Tebrikler oyunu kazandınız!'
     }
 }
+
+function updateWrongLetters() {
+    wrongLetters_el.innerHTML = `
+        ${wrongLetters.length > 0 ? '<h3>Hatalı Harfler:</h3>' : ''}
+        ${wrongLetters.map(letter => `<span>${letter}</span>`)}
+    
+    `;
+    items.forEach((item, index) => {
+        const errorCount = wrongLetters.length;
+
+        if (index < errorCount) {
+            item.style.display = 'block';
+        }
+        else {
+            item.style.display = 'none';
+        }
+    })
+}
+
+window.addEventListener('keydown', function (e) {
+    if (e.keyCode >= 65 && e.keyCode <= 90) {
+        const letter = e.key;
+
+
+        if (selectedWord.includes(letter)) {
+            if (!correctLetters.includes(letter)) {
+                correctLetters.push(letter);
+                displayWord();
+            } else {
+                console.log('bu harfi zaten eklediniz.')
+            }
+        } else {
+            if (!wrongLetters.includes(letter)) {
+                wrongLetters.push(letter);
+                updateWrongLetters();
+            }
+        }
+    }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 displayWord();

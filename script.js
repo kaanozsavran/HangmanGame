@@ -1,4 +1,6 @@
 const word_el = document.getElementById('word');
+const popup = document.getElementById('popup-container');
+const message_el = document.getElementById('success-message');
 
 
 const correctLetters = ['j', 'a', 'v', 's'];
@@ -29,7 +31,8 @@ function displayWord() {
 
     const w = word_el.innerText.replace(/\n/g, '');
     if (w === selectedWord) {
-        console.log("bildiniz.")
+        popup.style.display = 'flex';
+        message_el.innerText = 'Tebrikler oyunu kazandınız!'
     }
 }
 displayWord();

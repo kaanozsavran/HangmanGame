@@ -84,16 +84,17 @@ PlayAgainBtn.addEventListener('click', function () {
 })
 
 window.addEventListener('keydown', function (e) {
-    if (e.keyCode >= 65 && e.keyCode <= 90) {
-        const letter = e.key;
+    const letter = e.key;
 
-
+    // Harfin geçerli olup olmadığını kontrol et.
+    if (letter.match(/^[a-zA-ZıİğĞüÜşŞöÖçÇ]$/)) {
         if (selectedWord.includes(letter)) {
             if (!correctLetters.includes(letter)) {
                 correctLetters.push(letter);
                 displayWord();
             } else {
                 displayMessage();
+
             }
         } else {
             if (!wrongLetters.includes(letter)) {
